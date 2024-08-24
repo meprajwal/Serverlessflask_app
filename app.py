@@ -1,7 +1,6 @@
-from flask import Flask
+import redis
 
-app = Flask(__name__)
+r = redis.Redis(host='localhost', port=6379, db=0)
 
-@app.route('/')
-def main():
-    return "All ok!"
+def send_notification(data):
+    r.publish('notifications', data['message'])
